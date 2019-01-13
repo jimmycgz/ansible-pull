@@ -16,7 +16,7 @@ https://opensource.com/article/18/3/manage-your-workstation-configuration-ansibl
 * Step 0: Create this repo, create this readme file and local.yml
 From the file local.yml we can see it update apt repositories like CLI "sudo apt update" and invoke another file packages.yml in tasks folder, to install 3 appliations on the local host node.
 
-* Step 1: Launch a new ec2 ubuntu 16.04 as one of the target servers (say, from Launch Configuration: Jmy-launch-config-V4, may bake it when finish initial setup, or put the code to user data of Launch Template.
+* Step 1: Launch a new ec2 ubuntu 16.04 as one of the target servers (say, detach from scaling group tf-asg-20181028021325169900..02, may bake it when finish initial setup, or put the code to user data of Launch Template.
 * Step 2: Install ansible on the node, with python and git.
 ```
 python --version
