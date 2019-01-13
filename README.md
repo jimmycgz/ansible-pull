@@ -17,14 +17,14 @@ https://opensource.com/article/18/3/manage-your-workstation-configuration-ansibl
 From the file local.yml we can see it update apt repositories like CLI "sudo apt update" and invoke another file packages.yml in tasks folder, to install 3 appliations on the local host node.
 
 * Step 1: Launch a new ec2 ubuntu 16.04 as one of the target servers (say, detach from scaling group tf-asg-20181028021325169900..02, may bake it when finish initial setup, or put the code to user data of Launch Template.
-* Step 2: Install ansible on the node, with python and git.
+* Step 2: Install ansible on the node and git. below lines will also install Python 2.7.12 as default.
+
 ```
-python --version
-Python 2.7.12
 sudo apt-get install software-properties-common
 sudo apt-add-repository ppa:ansible/ansible
 sudo apt-get update
 sudo apt-get install ansible
+python --version
 git --version
 git version 2.7.4
 ```
