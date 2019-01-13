@@ -22,8 +22,8 @@ https://opensource.com/article/18/3/manage-your-workstation-configuration-ansibl
 > tasks/users.yml: create ansible user with sudo previlege,copy sudoers from files folder.
 > tasks/cron.yml: create cronb job in user ansible, check the update of central repo every 10minutes, pull the latest version if have any changes or do nothing.
 
-* Step 1: Launch a new ec2 ubuntu 16.04 as one of the target servers (say, detach from scaling group tf-asg-20181028021325169900..02, may bake it when finish initial setup, or put the code to user data of Launch Template.
-* Step 2: Install ansible on the node. Below lines will also install Python 2.7.12 as default.
+* Step 1 (DONE): Launch a new ec2 ubuntu 16.04 as one of the target servers, may bake it when finish initial setup, or put the code to user data of Launch Template.
+* Step 2 (DONE): Install ansible on the node. Below lines will also install Python 2.7.12 as default.
 
 ```
 sudo apt-get install software-properties-common
@@ -35,11 +35,13 @@ git --version
 git version 2.7.4
 ```
 
-* Step 3: Apply the playbook by pulling command. The 3 applications will be installed on the local host server. The 3 applications will be installed in the server node.
+* Step 3 (DONE): Apply the playbook by pulling command. The 3 applications will be installed on the server node.
 
 ```
 sudo ansible-pull -U https://github.com/jimmycgz/ansible-pull.git
 ```
-git clone and initi cron job.
-* Step4: bake or setup user data
+
+## Further Steps
+* Step4 (Todo): bake or setup user data
 * Step5: Use docker container to host applications and test pull deployment
+
