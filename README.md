@@ -18,7 +18,12 @@ https://opensource.com/article/18/3/manage-your-workstation-configuration-ansibl
 - hosts: localhost
   become: true
   tasks:
-  - name: ['htop', 'mc', 'tmux']
+  - name: Install packages
+    apt: name={{item}}
+    with_items:
+      - htop
+      - mc
+      - tmux
 ```
 
 * Step1: Launch a new ec2 ubuntu 16.04 as one of the target servers (say, from Launch Configuration: Jmy-launch-config-V4, may bake it when finish initial setup, or put the code to user data of Launch Template.
