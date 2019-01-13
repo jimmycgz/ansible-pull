@@ -13,21 +13,11 @@ Got inspired from Jay's series post as below links:
 https://opensource.com/article/18/3/manage-workstation-ansible
 https://opensource.com/article/18/3/manage-your-workstation-configuration-ansible-part-2
 
-* Step0: Creaet this repo, create this readme file and local.yml
-```
-- hosts: localhost
-  become: true
-  tasks:
-  - name: Install packages
-    apt: name={{item}}
-    with_items:
-      - htop
-      - mc
-      - tmux
-```
+* Step 0: Create this repo, create this readme file and local.yml
+From the file local.yml we can see it update apt repositories like CLI "sudo apt update" and invoke another file packages.yml in tasks folder, to install 3 appliations on the local host node.
 
-* Step1: Launch a new ec2 ubuntu 16.04 as one of the target servers (say, from Launch Configuration: Jmy-launch-config-V4, may bake it when finish initial setup, or put the code to user data of Launch Template.
-* Step2: Install ansible on the node, with python and git.
+* Step 1: Launch a new ec2 ubuntu 16.04 as one of the target servers (say, from Launch Configuration: Jmy-launch-config-V4, may bake it when finish initial setup, or put the code to user data of Launch Template.
+* Step 2: Install ansible on the node, with python and git.
 ```
 python --version
 Python 2.7.12
@@ -39,7 +29,7 @@ git --version
 git version 2.7.4
 ```
 
-* Step3: 
+* Step 3: Apply the playbook by pulling command. The 3 applications will be installed on the local host server
 ```
 sudo ansible-pull -U https://github.com/jimmycgz/ansible-pull.git
 ```
