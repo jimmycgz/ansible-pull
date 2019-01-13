@@ -1,12 +1,12 @@
 # ansible-pull make configuration management more flexible
 Best practice for a very typical use case: how to manage various workstations(dinamica ips, multiple oses, can't ssh)? Try ansible-pull mode
 
-## Use Case1:
+## Use Case:
 
 I'm hosting multiple applications by several scaling groups load balancing for front-end layer, application layer and DB layer. The IPs get changed each time scaling up happendes on each scaling group. How I can efficient deploy the latest artifact with updated configuration to each server? How to make everything immutable?
 
 
-## Solution for Use Case1: try ansible-pull
+## Solution: try ansible-pull at server localhost
 Have a centralized git reop storing all latest code with updated ansible configuration code, setup cron job in each node (may bake in AMI) to run ansible-pull every 10 minutes with -o parameter, it doesn't nothing if there's no any code change on the repo, and it downloads the latest code if have changes, to the target (local host) node and update the workload automatically. The admin needs only update the configuration code or application code to the repo.
 
 Got inspired from Jay's series post as below links:
