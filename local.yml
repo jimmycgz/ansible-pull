@@ -1,3 +1,4 @@
+---
 - hosts: localhost
   become: true
   pre_tasks:
@@ -6,4 +7,7 @@
       changed_when: False
 
   tasks:
+    - include: tasks/users.yml
+    - include: tasks/cron.yml
     - include: tasks/packages.yml
+
