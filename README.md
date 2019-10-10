@@ -1,6 +1,10 @@
 # ansible-pull make configuration management more flexible
 Best practice for a very typical use case: how to manage various workstations(dynamic ips, multiple OS types, can't ssh)? Try ansible-pull mode
 
+Find more details about ansible-pull on the official website:
+
+https://docs.ansible.com/ansible/latest/cli/ansible-pull.html
+
 ## Use Case 1:
 
 I'm hosting multiple applications by several scaling groups load balancing for front-end layer, application layer and DB layer. The IPs get changed each time scaling up happendes on each scaling group. How I can efficient deploy the latest artifact with updated configuration to each server? How to make everything immutable?
@@ -19,14 +23,17 @@ Got inspired from Jay's series post as below links:
 https://opensource.com/article/18/3/manage-workstation-ansible
 https://opensource.com/article/18/3/manage-your-workstation-configuration-ansible-part-2
 
-* Step 0: Create this repo, create this readme file, and all other files and folders.
+### * Step 0: Create this repo, create this readme file, and all other files and folders.
 > File local.yml: refresh apt repositories like CLI "sudo apt update" and invoke another 3 yml files, 
 > tasks/packages.yml: install 3 appliations on the local host node (htop,mc,tmux).
 > tasks/users.yml: create ansible user with sudo previlege,copy sudoers from files folder.
 > tasks/cron.yml: create cronb job in user ansible, check the update of central repo every 10minutes, pull the latest version if have any changes or do nothing.
 
-* Step 1 (DONE): Launch a new ec2 ubuntu 16.04 as one of the target servers, may bake it when finish initial setup, or put the code to user data of Launch Template.
-* Step 2 (DONE): Install ansible on the node. Below lines will also install Python 2.7.12 as default.
+### * Step 1 (DONE): Spin up a test node
+Launch a new ec2 ubuntu 16.04 as one of the target servers, may bake it when finish initial setup, or put the code to user data of Launch Template.
+
+### * Step 2 (DONE): Test ansible-pull with flag --only-if-changed 
+Install ansible on the node. Below lines will also install Python 2.7.12 as default.
 
 ```
 sudo apt-get install software-properties-common
@@ -35,10 +42,10 @@ sudo apt-get update
 sudo apt-get install ansible
 python --version
 git --version
-git version 2.7.4
 ```
 
-* Step 3 (DONE): Apply the playbook by pulling command. The 3 applications will be installed on the server node.
+### * Step 3 (DONE): Apply the playbook by pulling command. 
+The 3 applications will be installed on the server node.
 
 ```
 sudo ansible-pull -U https://github.com/jimmycgz/ansible-pull.git
