@@ -1,4 +1,4 @@
-# ansible-pull make configuration management more flexible
+# Make Configuration Management more Flexible by ansible-pull 
 Best practice for a very typical use case: how to manage various workstations(dynamic ips, multiple OS types, can't ssh)? Try ansible-pull mode
 
 Find more details about ansible-pull on the official website:
