@@ -1,5 +1,5 @@
 # ansible-pull make configuration management more flexible
-Best practice for a very typical use case: how to manage various workstations(dinamica ips, multiple oses, can't ssh)? Try ansible-pull mode
+Best practice for a very typical use case: how to manage various workstations(dynamic ips, multiple OS types, can't ssh)? Try ansible-pull mode
 
 ## Use Case 1:
 
@@ -7,10 +7,13 @@ I'm hosting multiple applications by several scaling groups load balancing for f
 
 ## Use Case 2:
 
-My company has one old application running in 300 workstations including Windows 98, SE, 7, Suse , Redhat, Cenos and Ubuntu, but it's not allowed to open port 22 so that we can't simply using Ansible to push the artifact by SSH connections. How can we effectively deploy the code multiple times a week?
+My company has one old application running in 300 workstations including Windows 7/XP, Suse, Redhat, Centos and Ubuntu, but it's not allowed to open port 22 so that we can't simply using Ansible to push the artifact by SSH connections. How can we effectively deploy the code multiple times a week?
 
 ## Solution: try ansible-pull at server localhost
 Have a centralized git repo storing all latest code with updated ansible configuration code, use ansible-pull at each node just once, it'll automatically setup cron job in each node to check the repo update every 10 minutes (by using ansible-pull with -o parameter), it does nothing if there's no any code change on the repo, and it downloads the latest code if have changes, to the target (local host) node and update the workload automatically. The admin needs only update the configuration code or application code to the repo.
+
+### NOTE
+For security reason, if you don't want Ansible to access all source code, you may just let Ansible to access a public repo where has only version tags, then ansible-pull will get the changed tags and update the tag variables in target servers, so that the remote servers will be able to download the latest artifacts/images; or you can separate secrets into a restricted reop/vault.
 
 Got inspired from Jay's series post as below links:
 https://opensource.com/article/18/3/manage-workstation-ansible
