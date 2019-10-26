@@ -17,16 +17,22 @@ My company has one old application running in 300 workstations including Windows
 Have a centralized git repo storing all latest code with updated ansible configuration code, use ansible-pull at each node just once, it'll automatically setup cron job in each node to check the repo update every 10 minutes (by using ansible-pull with -o parameter), it does nothing if there's no any code change on the repo, and it downloads the latest code if have changes, to the target (local host) node and update the workload automatically. The admin needs only update the configuration code or application code to the repo.
 
 ### NOTE
-For security reason, if you don't want Ansible to access all source code, you may just let Ansible to access a public repo where has only version tags, then ansible-pull will get the changed tags and update the tag variables in target servers, so that the remote servers will be able to download the latest artifacts/images; or you can separate secrets into a restricted reop/vault.
+For security reason, if you don't want Ansible to access all source code, you may just let Ansible to access a public repo where has only version tags, then ansible-pull will get the changed tags and update the tag variables in target servers, so that the remote servers will be able to download the latest artifacts/images; or you can separate secrets into a restricted repo/vault.
 
 Got inspired from Jay's series post as below links:
+
 https://opensource.com/article/18/3/manage-workstation-ansible
+
 https://opensource.com/article/18/3/manage-your-workstation-configuration-ansible-part-2
 
 ### * Step 0: Create this repo, create this readme file, and all other files and folders.
+
 > File local.yml: refresh apt repositories like CLI "sudo apt update" and invoke another 3 yml files, 
+
 > tasks/packages.yml: install 3 appliations on the local host node (htop,mc,tmux).
+
 > tasks/users.yml: create ansible user with sudo previlege,copy sudoers from files folder.
+
 > tasks/cron.yml: create cronb job in user ansible, check the update of central repo every 10minutes, pull the latest version if have any changes or do nothing.
 
 ### * Step 1 (DONE): Spin up a test node
@@ -52,6 +58,8 @@ sudo ansible-pull -U https://github.com/jimmycgz/ansible-pull.git
 ```
 
 ## Further Steps
+
 * Step4 (Todo): bake or setup user data
+
 * Step5: Use docker container to host applications and test pull deployment
 
