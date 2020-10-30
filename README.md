@@ -1,11 +1,11 @@
-# Make Configuration Management more Flexible by ansible-pull 
+# Make Configuration Management more Flexible by Ansible Pull Method
 Best practice for a very typical use case: how to manage various workstations(dynamic ips, multiple OS types, can't ssh)? Try ansible-pull mode
 
 Find more details about ansible-pull on the official website:
 
 https://docs.ansible.com/ansible/latest/cli/ansible-pull.html
 
-## Use Case 1:
+### Use Case 1:
 
 I'm hosting multiple applications by several scaling groups load balancing for front-end layer, application layer and DB layer. The IPs get changed each time scaling happendes. How could I efficiently deploy the latest artifact with updated configuration to each server? How to make everything immutable?
 
@@ -13,12 +13,12 @@ I'm hosting multiple applications by several scaling groups load balancing for f
 * Option 1.2: Use ansible dynamic inventory, generated from filtering tags if applicable.
 
 
-## Use Case 2:
+### Use Case 2:
 
 My company has one old application running in 100 workstations including Windows 7/XP, Suse, Redhat, Centos and Ubuntu, but it's not allowed to open port 22 so that we can't simply using Ansible Push to manage them via SSH connections. How can we effectively deploy the code multiple times a week?
 * Option: Use pull method in each target to download the updated artifact to install.
 
-## Use Case 3:
+### Use Case 3:
 
 Ansible push takes forever to manage 500 - 1000 VMs, it can be much faster using Ansible Pull method
 
@@ -68,7 +68,7 @@ Launch a new ec2 ubuntu as one of the target servers, may bake it when finish in
 ### * Step 2: Install ansible on the node. 
 
 
-Below lines will also install Python as default.
+Below lines installs Ansible to the Ubuntu VM, will also install Python as default.
 
 ```
 sudo apt-get install software-properties-common
@@ -77,6 +77,11 @@ sudo apt-get update
 sudo apt-get install ansible
 python --version
 git --version
+```
+
+Simple way to install Ansible in Mac OS
+```
+brew install ansible
 ```
 
 ### * Step 3: Manually pull the repo and smoke test
