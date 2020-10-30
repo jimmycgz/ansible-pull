@@ -70,6 +70,7 @@ git --version
 ### * Step 3: Manually pull the repo and smoke test
 ```
 git clone https://github.com/jimmycgz/ansible-pull.git
+make test
 
 ``` 
 
