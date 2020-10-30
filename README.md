@@ -9,24 +9,34 @@ https://docs.ansible.com/ansible/latest/cli/ansible-pull.html
 
 I'm hosting multiple applications by several scaling groups load balancing for front-end layer, application layer and DB layer. The IPs get changed each time scaling happendes. How could I efficiently deploy the latest artifact with updated configuration to each server? How to make everything immutable?
 
+* Option 1.1: Use pull method in each target to download the updated artifact to install.
+* Option 1.2: Use ansible dynamic inventory, generated from filtering tags if applicable.
+
+
 ## Use Case 2:
 
-My company has one old application running in 300 workstations including Windows 7/XP, Suse, Redhat, Centos and Ubuntu, but it's not allowed to open port 22 so that we can't simply using Ansible to push the artifact by SSH connections. How can we effectively deploy the code multiple times a week?
+My company has one old application running in 100 workstations including Windows 7/XP, Suse, Redhat, Centos and Ubuntu, but it's not allowed to open port 22 so that we can't simply using Ansible Push to manage them via SSH connections. How can we effectively deploy the code multiple times a week?
+* Option: Use pull method in each target to download the updated artifact to install.
 
-## Solution: try ansible-pull at server localhost
-Have a centralized git repo storing all latest code with updated ansible configuration code, use ansible-pull at each node just once, it'll automatically setup cron job in each node to check the repo update every 10 minutes (by using ansible-pull with -o parameter), it does nothing if there's no any code change on the repo, and it downloads the latest code if changed, to the target (local host) node and update the workload automatically. The admin needs only update the configuration code or application code to the repo.
+## Use Case 3:
+
+Ansible push takes forever to manage 500 - 1000 VMs, it can be much faster using Ansible Pull method
+
+
+## Solution Example: try ansible-pull at server localhost
+This repo introduces how to setup ansible-pull method at each target just once, it'll automatically setup cron job in each node to check the repo update every 10 minutes (by using ansible-pull with -o parameter), it does nothing if there's no any code change on the repo, and it downloads the latest code if changed, to the target (local host) node and update the workload automatically. The admin needs only update the configuration code or application code to the repo.
 
 ![Diagram1](https://github.com/jimmycgz/ansible-pull/blob/master/ansible-pull.png)
  * Picture source: https://www.slideshare.net/vishalcdac/ansible-61131180
 
-### Ansible push vs pull
-* Comparison 
+### Ansible Push vs Pull
+* Comparison table for Push vs Pull 
 https://www.oreilly.com/library/view/enterprise-cloud-security/9781788299558/43f530d6-2296-4cc7-9ed1-bff6d70a2aa3.xhtml
 
-* Diagram of Ansible push
+* Diagram of Ansible Push
 https://github.com/jimmycgz/ansible-push/blob/master/README.md
 
-* Examples of Ansible push
+* Examples of Ansible Push
 https://github.com/jimmycgz/terraform-ansible-example
 https://github.com/jimmycgz/ansible-push
 
@@ -53,10 +63,12 @@ https://opensource.com/article/18/3/manage-your-workstation-configuration-ansibl
 
 
 ### * Step 1: Spin up a test node
-Launch a new ec2 ubuntu 16.04 as one of the target servers, may bake it when finish initial setup, or put the code to user data of Launch Template.
+Launch a new ec2 ubuntu as one of the target servers, may bake it when finish initial setup, or put the code to user data of Launch Template.
 
-### * Step 2: Test ansible-pull with flag --only-if-changed 
-Install ansible on the node. Below lines will also install Python as default.
+### * Step 2: Install ansible on the node. 
+
+
+Below lines will also install Python as default.
 
 ```
 sudo apt-get install software-properties-common
@@ -75,15 +87,15 @@ make test
 ``` 
 
 ### * Step 4: Apply the playbook by pulling command. 
-The 3 applications will be installed on the server node.
+Test ansible-pull with flag --only-if-changed. The 3 applications will be installed on the server node.
 
 ```
 sudo ansible-pull -U https://github.com/jimmycgz/ansible-pull.git
 ```
 
-## Further Steps
+## Further Tests
 
-* Step4 (Todo): bake or setup user data
+* May bake or setup via AWS user data or startup script to setup ansible pull
 
-* Step5: Use docker container to host applications and test pull deployment
+* May use docker containers to host applications and test pull deployment
 
