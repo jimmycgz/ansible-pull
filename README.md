@@ -19,7 +19,18 @@ Have a centralized git repo storing all latest code with updated ansible configu
 ![Diagram1](https://github.com/jimmycgz/ansible-pull/blob/master/ansible-pull.png)
  * Picture source: https://www.slideshare.net/vishalcdac/ansible-61131180
 
-### NOTE
+### Ansible push vs pull
+* Comparison 
+https://www.oreilly.com/library/view/enterprise-cloud-security/9781788299558/43f530d6-2296-4cc7-9ed1-bff6d70a2aa3.xhtml
+
+* Diagram of Ansible push
+https://github.com/jimmycgz/ansible-push/blob/master/README.md
+
+* Examples of Ansible push
+https://github.com/jimmycgz/terraform-ansible-example
+https://github.com/jimmycgz/ansible-push
+
+### Security Concern about Ansible Pull
 For security reason, if you don't want Ansible to access all source code, you may just let Ansible to access a public repo where has only version tags, then ansible-pull will get the changed tags and update the tag variables in target servers, so that the remote servers will be able to download the latest artifacts/images; or you can separate secrets into a restricted repo/vault.
 
 Got inspired from Jay's series post as below links:
