@@ -1,0 +1,22 @@
+---
+
+- hosts: local
+  pre_tasks:
+
+    - name: Say Hello
+      local_action:
+        module: command echo "Hello! Pre-task starts"
+      changed_when: false  
+        
+  tasks:
+    - name: Say Hello again
+      local_action:
+        module: command echo " Tasks begin here"
+      changed_when: false  
+
+    - name: Copy a file
+      local_action:
+        module: copy
+        src: "{{ source_file }}"
+        dest: "{{ target_file }}"
+      
